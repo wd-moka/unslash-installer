@@ -1,67 +1,74 @@
 import subprocess
 import json
 
-forkOfDistros = DISTRO_FORKS_LIST = [  # i got that scipt online. its not mine
-    {"distro": "Absolute Linux", "fork_of": "slackware"},
-    {"distro": "AlmaLinux", "fork_of": "fedora"},
-    {"distro": "Alpine Linux", "fork_of": "independent"},
-    {"distro": "Amazon Linux 2023", "fork_of": "fedora"},
-    {"distro": "AntiX", "fork_of": "debian"},
-    {"distro": "Arch Linux", "fork_of": "arch"},
-    {"distro": "Artix Linux", "fork_of": "arch"},
-    {"distro": "BlackArch", "fork_of": "arch"},
-    {"distro": "Calculate Linux", "fork_of": "gentoo"},
-    {"distro": "CentOS Stream", "fork_of": "fedora"},
-    {"distro": "Chapeau", "fork_of": "fedora"},
-    {"distro": "Clear Linux", "fork_of": "independent"},
-    {"distro": "Debian", "fork_of": "debian"},
-    {"distro": "Deepin", "fork_of": "debian"},
-    {"distro": "Devuan", "fork_of": "debian"},
-    {"distro": "Elementary OS", "fork_of": "debian"},
-    {"distro": "EndeavourOS", "fork_of": "arch"},
-    {"distro": "Fedora", "fork_of": "fedora"},
-    {"distro": "Garuda Linux", "fork_of": "arch"},
-    {"distro": "GeckoLinux", "fork_of": "suse"},
-    {"distro": "Gentoo", "fork_of": "gentoo"},
-    {"distro": "Kali Linux", "fork_of": "debian"},
-    {"distro": "KDE Neon", "fork_of": "debian"},
-    {"distro": "Knoppix", "fork_of": "debian"},
-    {"distro": "Korora", "fork_of": "fedora"},
-    {"distro": "Kubuntu", "fork_of": "debian"},
-    {"distro": "Leap", "fork_of": "suse"},
-    {"distro": "Linux Mint", "fork_of": "debian"},
-    {"distro": "Lubuntu", "fork_of": "debian"},
-    {"distro": "LXLE", "fork_of": "debian"},
-    {"distro": "Manjaro", "fork_of": "arch"},
-    {"distro": "MX Linux", "fork_of": "debian"},
-    {"distro": "NixOS", "fork_of": "independent"},
-    {"distro": "Nobara Project", "fork_of": "fedora"},
-    {"distro": "openSUSE", "fork_of": "suse"},
-    {"distro": "Oracle Linux", "fork_of": "fedora"},
-    {"distro": "Parrot OS", "fork_of": "debian"},
-    {"distro": "Pop!_OS", "fork_of": "debian"},
-    {"distro": "PureOS", "fork_of": "debian"},
-    {"distro": "Raspberry Pi OS", "fork_of": "debian"},
-    {"distro": "Red Hat Enterprise Linux (RHEL)", "fork_of": "fedora"},
-    {"distro": "Redcore Linux", "fork_of": "gentoo"},
-    {"distro": "Rocky Linux", "fork_of": "fedora"},
-    {"distro": "Sabayon Linux", "fork_of": "gentoo"},
-    {"distro": "Salix", "fork_of": "slackware"},
-    {"distro": "Slax", "fork_of": "slackware"},
-    {"distro": "Solus", "fork_of": "independent"},
-    {"distro": "SteamOS 3.0+", "fork_of": "arch"},
-    {"distro": "Tails", "fork_of": "debian"},
-    {"distro": "Tumbleweed", "fork_of": "suse"},
-    {"distro": "Ubuntu", "fork_of": "debian"},
-    {"distro": "Ubuntu Budgie", "fork_of": "debian"},
-    {"distro": "Ubuntu MATE", "fork_of": "debian"},
-    {"distro": "Ubuntu Studio", "fork_of": "debian"},
-    {"distro": "Ubuntu Unity", "fork_of": "debian"},
-    {"distro": "Void Linux", "fork_of": "independent"},
-    {"distro": "Xubuntu", "fork_of": "debian"},
-    {"distro": "Zenwalk", "fork_of": "slackware"},
-    {"distro": "Zorin OS", "fork_of": "debian"}
+forkOfDistrosRaw = DISTRO_FORKS_LIST = [
+    {"distro": "absolute", "fork_of": "slackware"},
+    {"distro": "almalinux", "fork_of": "fedora"},
+    {"distro": "alpine", "fork_of": "independent"},
+    {"distro": "amazon", "fork_of": "fedora"},
+    {"distro": "antix", "fork_of": "debian"},
+    {"distro": "arch", "fork_of": "arch"},
+    {"distro": "artix", "fork_of": "arch"},
+    {"distro": "blackarch", "fork_of": "arch"},
+    {"distro": "calculate", "fork_of": "gentoo"},
+    {"distro": "centos", "fork_of": "fedora"},
+    {"distro": "chapeau", "fork_of": "fedora"},
+    {"distro": "clear-linux-os", "fork_of": "independent"},
+    {"distro": "debian", "fork_of": "debian"},
+    {"distro": "deepin", "fork_of": "debian"},
+    {"distro": "devuan", "fork_of": "debian"},
+    {"distro": "elementary", "fork_of": "debian"},
+    {"distro": "endeavouros", "fork_of": "arch"},
+    {"distro": "fedora", "fork_of": "fedora"},
+    {"distro": "garuda", "fork_of": "arch"},
+    {"distro": "geckolinux", "fork_of": "suse"},
+    {"distro": "gentoo", "fork_of": "gentoo"},
+    {"distro": "kali", "fork_of": "debian"},
+    {"distro": "neon", "fork_of": "debian"},
+    {"distro": "knoppix", "fork_of": "debian"},
+    {"distro": "korora", "fork_of": "fedora"},
+    {"distro": "kubuntu", "fork_of": "debian"},
+    {"distro": "opensuse-leap", "fork_of": "suse"},
+    {"distro": "linuxmint", "fork_of": "debian"},
+    {"distro": "lubuntu", "fork_of": "debian"},
+    {"distro": "lxle", "fork_of": "debian"},
+    {"distro": "manjaro", "fork_of": "arch"},
+    {"distro": "mx", "fork_of": "debian"},
+    {"distro": "nixos", "fork_of": "independent"},
+    {"distro": "nobara", "fork_of": "fedora"},
+    {"distro": "opensuse", "fork_of": "suse"},
+    {"distro": "oracle", "fork_of": "fedora"},
+    {"distro": "parrot", "fork_of": "debian"},
+    {"distro": "pop", "fork_of": "debian"},
+    {"distro": "pureos", "fork_of": "debian"},
+    {"distro": "raspbian", "fork_of": "debian"},
+    {"distro": "rhel", "fork_of": "fedora"},
+    {"distro": "redcore", "fork_of": "gentoo"},
+    {"distro": "rocky", "fork_of": "fedora"},
+    {"distro": "sabayon", "fork_of": "gentoo"},
+    {"distro": "salix", "fork_of": "slackware"},
+    {"distro": "slax", "fork_of": "slackware"},
+    {"distro": "solus", "fork_of": "independent"},
+    {"distro": "steamos", "fork_of": "arch"},
+    {"distro": "tails", "fork_of": "debian"},
+    {"distro": "opensuse-tumbleweed", "fork_of": "suse"},
+    {"distro": "ubuntu", "fork_of": "debian"},
+    {"distro": "ubuntu-budgie", "fork_of": "debian"},
+    {"distro": "ubuntu-mate", "fork_of": "debian"},
+    {"distro": "ubuntu-studio", "fork_of": "debian"},
+    {"distro": "ubuntu-unity", "fork_of": "debian"},
+    {"distro": "void", "fork_of": "independent"},
+    {"distro": "xubuntu", "fork_of": "debian"},
+    {"distro": "zenwalk", "fork_of": "slackware"},
+    {"distro": "zorin", "fork_of": "debian"}
 ]
+
+for item in forkOfDistrosRaw:
+    item['distro'] = item['distro'].lower()
+    item['fork_of'] = item['fork_of'].lower()
+pass
+
+forkOfDistros = forkOfDistrosRaw
 
 isAdavncedUsr = False #defult mode. can be checked in settings
 isUsingArchBtw = False
@@ -102,10 +109,21 @@ def check_os():
             pass
     
     except():
-        
+        print("Error: Could not read /etc/os-release. Defaulting to independent.")
+        mainDistro = "independent"
         pass
 
     pass
+
+
+def create_gui():
+
+    check_os()
+    print(f"Current Distro: {currentDistro}")
+    print(f"Main Distro: {mainDistro}")
+    print(f"Is Using Arch: {isUsingArchBtw}")
+
+    # start creating the gui here. tommorw
 
 def check_cartogory():
     pass
@@ -124,3 +142,4 @@ def check_package():
 
 def install_package():
     pass
+
