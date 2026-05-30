@@ -123,7 +123,7 @@ def create_gui():
     print(f"Main Distro: {mainDistro}")
     print(f"Is Using Arch: {isUsingArchBtw}")
 
-    # start creating the gui here. tommorw
+    # start creating the gui here.
 
 def check_cartogory():
     pass
