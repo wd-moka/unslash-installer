@@ -1,5 +1,13 @@
 import subprocess
 import json
+import tkinter as tk
+from tkinter import ttk
+import customtkinter as ctk
+import os as os
+import sys as sys
+import gi as gi
+gi.require_version('Gtk', '4.0')
+from gi.repository import Gtk
 
 forkOfDistrosRaw = DISTRO_FORKS_LIST = [
     {"distro": "absolute", "fork_of": "slackware"},
@@ -75,6 +83,8 @@ isUsingArchBtw = False
 currentDistro = None
 mainDistro = None
 line2 = None
+protocol = None
+
 
 def check_os():
     global isUsingArchBtw
@@ -108,7 +118,7 @@ def check_os():
                     break
             pass
     
-    except():
+    except:
         print("Error: Could not read /etc/os-release. Defaulting to independent.")
         mainDistro = "independent"
         pass
@@ -116,14 +126,60 @@ def check_os():
     pass
 
 
-def create_gui():
+def check_xdg():
+    global protocol
+    #check if user use x11 or wayland,
 
+    if 'WAYLAND_DISPLAY' in os.environ:
+        protocol = 'wayland'
+    elif 'DISPLAY' in os.environ:
+        protocol = 'x11'
+    else:
+        protocol = 'x11' #default to x11 if unknown
+
+    pass
+
+
+def create_gui():
+    global protocol
     check_os()
+    check_xdg()
     print(f"Current Distro: {currentDistro}")
     print(f"Main Distro: {mainDistro}")
     print(f"Is Using Arch: {isUsingArchBtw}")
+    print(f"Protocol: {protocol}")
 
-    # start creating the gui here.
+    if protocol == 'wayland':
+        print("User is using Wayland. using GI")
+        # basic gui setup
+        app = Gtk.Application(application_id="com.unslash.installer")
+        def on_activate(app):
+            win = Gtk.ApplicationWindow(application=app)
+            win.set_title("Unslash - Installer")
+            win.set_default_size(400, 500)
+            win.present()
+        app.connect("activate", on_activate)
+        app.run(None)
+        pass
+
+    elif protocol == 'x11':
+        print("User is using X11. using customtkinter")
+        # basic gui setup
+        root = ctk.CTk()
+        root.title("Unslash - Installer")
+        root.geometry('400x500')
+        root.mainloop()
+        pass
+
+    else:
+        print("Unknown protocol. Defaulting to customtkinter.")
+        root = ctk.CTk()
+        root.title("Unslash - Installer")
+        root.geometry('400x500')
+        root.mainloop()
+        pass
+pass
+
 
 def check_cartogory():
     pass
@@ -143,3 +199,4 @@ def check_package():
 def install_package():
     pass
 
+create_gui()
