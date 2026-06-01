@@ -8,6 +8,7 @@ import sys as sys
 import gi as gi
 gi.require_version('Gtk', '4.0')
 from gi.repository import Gtk
+from gi.repository import Gtk, Gdk
 
 forkOfDistrosRaw = DISTRO_FORKS_LIST = [
     {"distro": "absolute", "fork_of": "slackware"},
@@ -156,7 +157,24 @@ def create_gui():
         def on_activate(app):
             win = Gtk.ApplicationWindow(application=app)
             win.set_title("Unslash - Installer")
-            win.set_default_size(400, 500)
+            win.set_default_size(850, 550)
+            # show text?
+            win.box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=16)
+            win.label = Gtk.Label(label="Apps")
+            win.label.get_style_context().add_class("title-text")
+            #use css to make it look better
+            gtk_css_provider = Gtk.CssProvider()
+            gtk_css_provider.load_from_path("./style.css")
+
+            display = Gdk.Display.get_default()
+            Gtk.StyleContext.add_provider_for_display(
+                display, 
+                gtk_css_provider, 
+                Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+            ) 
+
+            win.box.append(win.label)
+            win.set_child(win.box)
             win.present()
         app.connect("activate", on_activate)
         app.run(None)
