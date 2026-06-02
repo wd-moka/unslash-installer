@@ -1,6 +1,28 @@
+.main-box {
+    background-color: #4d4646;
+}
+
+.header {
+    padding: 15px 25px; 
+}
+
 .title-text {
     font-size: 48px;
     font-weight: bold;
-    color: #333;
+    color: #ffe3e3;
     margin: 15px;
+}
+
+.settings-btn {
+    background: none;             
+    background-color: transparent; 
+    border: none;                 
+    box-shadow: none;             
+    padding: 0px;                   
+    margin-left: auto; 
+    margin-right: 15px;      
+}
+
+.settings-icon {
+    -gtk-icon-palette: error #ffe3e3;
 }

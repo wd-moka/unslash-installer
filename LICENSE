@@ -19,3 +19,20 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+-------------------------------------------------------------------
+Third-Party Licenses
+-------------------------------------------------------------------
+
+1. Font Awesome Free (v7.2.0)
+   - Icons licensed under the SIL OFL 1.1 License (https://sil.org)
+   - Code licensed under the MIT License (https://opensource.org)
+   - Copyright (c) Fonticons, Inc. (https://fontawesome.com)
+
+2. CustomTkinter
+   - UI components licensed under the MIT License
+   - Copyright (c) Tom Schimansky (https://github.com)
+
+3. PyGObject (gi)
+   - Python bindings licensed under the GNU LGPL v2.1 or later License
+   - Copyright (c) The PyGObject Developers (https://gnome.org)

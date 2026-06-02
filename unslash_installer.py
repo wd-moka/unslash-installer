@@ -162,9 +162,24 @@ def create_gui():
             win.box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=16)
             win.label = Gtk.Label(label="Apps")
             win.label.get_style_context().add_class("title-text")
+            win.box.get_style_context().add_class("main-box")
+            win.header = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=16)
+            win.header.get_style_context().add_class("header")
             #use css to make it look better
             gtk_css_provider = Gtk.CssProvider()
             gtk_css_provider.load_from_path("./style.css")
+
+            # elements
+            win.settings_btn = Gtk.Button(label="")
+            win.gear_file = gi.repository.Gio.File.new_for_path("./assets/fontawesome/svgs/solid/gear.svg")
+            vector_canvas = Gtk.IconPaintable.new_for_file(win.gear_file,30,1)
+            win.settings_icon = Gtk.Image.new_from_paintable(vector_canvas)
+            win.settings_icon.get_style_context().add_class("settings-icon")
+            win.settings_icon.set_pixel_size(30)
+            win.settings_btn.set_child(win.settings_icon)
+            win.settings_btn.get_style_context().add_class("settings-btn")
+            
+            
 
             display = Gdk.Display.get_default()
             Gtk.StyleContext.add_provider_for_display(
@@ -173,7 +188,13 @@ def create_gui():
                 Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
             ) 
 
-            win.box.append(win.label)
+            #appends
+
+            win.box.append(win.header)
+            win.header.append(win.label)
+            win.header.append(win.settings_btn)
+            win.label.set_hexpand(True)
+            win.label.set_halign(Gtk.Align.START)
             win.set_child(win.box)
             win.present()
         app.connect("activate", on_activate)
